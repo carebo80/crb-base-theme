@@ -1,0 +1,459 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =========================================================
+   Components
+========================================================= */
+.crb-menu.crb-menu--pills > li > .crb-menu-item > a {
+  border: 1px solid color-mix(in oklch, var(--c-primary) 55%, transparent);
+  background: color-mix(in oklch, var(--c-surface) 92%, transparent);
+  border-radius: 0.75rem; /* pill */
+  padding: 0.55rem 0.75rem;
+}
+
+.crb-menu.crb-menu--pills > li > .crb-menu-item > a:hover {
+  background: color-mix(in oklch, var(--c-primary) 10%, transparent);
+}
+
+.crb-menu.crb-menu--pills > li.current-menu-item > .crb-menu-item > a {
+  background: color-mix(in oklch, var(--c-primary) 12%, transparent);
+}
+.crb-menu.crb-menu--underline > li > .crb-menu-item > a {
+  position: relative;
+  border-radius: 0.75rem;
+  padding: 0.55rem 0.5rem; /* weniger “pill” feeling */
+  background: transparent; /* wichtig: nicht pillig */
+}
+/* active underline: deckt WP + Woo ab */
+.crb-menu.crb-menu--underline
+  > li:is(
+    .current-menu-item,
+    .current_page_item,
+    .current-menu-ancestor,
+    .current_page_ancestor,
+    .current-menu-parent,
+    .current_page_parent
+  )
+  > .crb-menu-item
+  > a::after {
+  transform: scaleX(1);
+}
+.crb-menu.crb-menu--pills
+  > li:is(
+    .current-menu-item,
+    .current_page_item,
+    .current-menu-ancestor,
+    .current_page_ancestor,
+    .current-menu-parent,
+    .current_page_parent
+  )
+  > .crb-menu-item
+  > a {
+  background: color-mix(in oklch, var(--c-primary) 14%, transparent);
+  border-color: color-mix(in oklch, var(--c-primary) 75%, transparent);
+}
+.crb-menu.crb-menu--pills
+  > li:is(.current-menu-item, .current_page_item)
+  > .crb-menu-item
+  > a {
+  color: color-mix(in oklch, var(--c-primary) 80%, var(--c-text));
+}
+.crb-menu.crb-menu--underline > li > .crb-menu-item > a::after {
+  content: "";
+  position: absolute;
+  left: 0.5rem;
+  right: 0.5rem;
+  bottom: 0.2rem;
+  height: 2px;
+  border-radius: 999px;
+  background: var(--c-primary);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.15s ease;
+}
+
+.crb-menu.crb-menu--underline > li > .crb-menu-item > a:hover::after,
+.crb-menu.crb-menu--underline
+  > li.current-menu-item
+  > .crb-menu-item
+  > a::after {
+  transform: scaleX(1);
+}
+
+/* submenu links normal flex */
+.crb-menu .sub-menu a {
+  @apply flex items-center gap-2 rounded-xl px-3 py-2 leading-snug;
+}
+/* Top-Level Links (mit Icon-Spalte) */
+.crb-menu > li > .crb-menu-item > a {
+  display: grid;
+  grid-template-columns: 1.25rem 1fr;
+  align-items: center;
+  column-gap: 0.5rem;
+  white-space: nowrap;
+}
+
+/* Submenu Links = flex */
+.crb-menu .sub-menu a {
+  @apply flex items-center gap-2 rounded-xl px-3 py-2 leading-snug;
+}
+
+.crb-menu-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  color: var(--c-icon); /* oder var(--c-text) */
+}
+.crb-menu-icon svg {
+  width: 1rem;
+  height: 1rem;
+  display: block;
+}
+
+@layer components {
+  /* HEADER */
+  .crb-site-header {
+    position: sticky;
+    top: var(--wp-admin--admin-bar--height, 0px);
+    z-index: 50;
+    background-color: var(--c-header);
+    box-shadow: 0 0 0 3px color-mix(in oklch, var(--c-primary) 25%, transparent);
+    @apply backdrop-blur;
+  }
+  /* HERO */
+  .hero {
+    color: var(--hero-text, var(--c-text));
+  }
+  .hero__overlay {
+    background: linear-gradient(
+      to right bottom,
+      var(--c-primary),
+      var(--c-secondary)
+    );
+    opacity: var(--hero-a, 0.65);
+    pointer-events: none;
+  }
+  /* Größen */
+  .icon-btn-size-sm .icon-btn {
+    @apply h-9 w-9;
+  }
+  .icon-btn-size-sm .icon-btn svg {
+    @apply h-4 w-4;
+  }
+
+  .icon-btn-size-md .icon-btn {
+    @apply h-10 w-10;
+  }
+  .icon-btn-size-md .icon-btn svg {
+    @apply h-5 w-5;
+  }
+
+  .icon-btn-size-lg .icon-btn {
+    @apply h-12 w-12;
+  }
+  .icon-btn-size-lg .icon-btn svg {
+    @apply h-6 w-6;
+  }
+  .btn-outline {
+    @apply inline-flex items-center justify-center rounded-xl
+           border px-4 py-2 transition;
+    border-color: var(--c-primary);
+    color: var(--c-primary);
+  }
+  .btn-outline:hover {
+    box-shadow: 0 0 0 3px color-mix(in oklch, var(--c-primary) 25%, transparent);
+  }
+  /* NAV */
+  .crb-menu {
+    @apply flex relative items-center gap-1 m-0 p-0 list-none;
+  }
+  .crb-menu > li {
+    @apply m-0 p-0;
+  }
+  /* open on hover/focus */
+  .crb-menu > li:hover > .sub-menu,
+  .crb-menu > li:focus-within > .sub-menu {
+    display: block;
+  }
+  .crb-menu a {
+    color: var(--c-text);
+  }
+  /* Submenu base */
+  /* Desktop Submenu */
+  .crb-menu .sub-menu {
+    @apply absolute left-0 top-full min-w-[14rem] rounded-2xl shadow-lg p-2;
+    background-color: var(--c-menu);
+    border: 1px solid var(--c-border);
+    color: var(--c-text);
+
+    display: none;
+    transform: translateY(0.5rem);
+    z-index: 60;
+  }
+  /* “Hover-Bridge”: ein unsichtbarer Streifen, damit der Mausweg nicht aus Hover fällt */
+  .crb-menu .sub-menu::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -0.5rem;
+    height: 0.5rem;
+  }
+
+  .crb-menu .sub-menu a:hover {
+    background-color: var(--c-surface-2);
+  }
+  /* Level 3 flyout */
+  .crb-menu .sub-menu .sub-menu {
+    top: 0;
+    left: 100%;
+    transform: translateY(0); /* kein drop nach unten bei flyout */
+    margin-left: 0.5rem;
+  }
+
+  /* Submenu items */
+  .crb-menu .sub-menu li {
+    @apply m-0;
+  }
+
+  .crb-menu.crb-menu--underline > li > .crb-menu-item > a {
+    position: relative;
+    padding: 0.55rem 0.5rem;
+  }
+  .crb-menu--underline a {
+    @apply relative rounded-lg px-2 py-2;
+  }
+
+  .crb-menu--underline a::after {
+    content: "";
+    position: absolute;
+    left: 0.5rem;
+    right: 0.5rem;
+    bottom: 0.25rem;
+    height: 2px;
+    background: var(--c-primary);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.15s ease;
+    border-radius: 999px;
+  }
+
+  .crb-menu--underline a:hover::after,
+  .crb-menu--underline .current-menu-item > a::after {
+    transform: scaleX(1);
+  }
+
+  .crb-menu-mobile {
+    @apply list-none m-0 p-0 grid gap-1;
+  }
+  .crb-menu-mobile a {
+    @apply block px-2 py-3 rounded-xl;
+  }
+  .crb-menu-item {
+    @apply flex items-center gap-1;
+  }
+
+  .crb-submenu {
+    background-color: color-mix(in oklch, var(--c-surface-2) 98%, transparent);
+    border: 1px solid color-mix(in oklch, var(--c-border) 80%, transparent);
+    @apply rounded-xl shadow-lg backdrop-blur;
+  }
+
+  .crb-submenu-toggle {
+    @apply inline-flex items-center justify-center rounded-full px-2 py-2;
+  }
+  .icon-btn {
+    @apply inline-flex items-center justify-center rounded-xl transition-colors;
+    color: var(--c-icon-btn);
+  }
+  .icon-btn--outline .icon-btn {
+    border: 1px solid color-mix(in oklch, var(--c-primary) 60%, transparent);
+    background-color: transparent;
+  }
+
+  .icon-btn--ghost .icon-btn {
+    border: none;
+    background-color: transparent;
+  }
+
+  .icon-btn svg {
+    width: 1.25rem; /* 20px */
+    height: 1.25rem;
+    display: block;
+  }
+  /* Mobile: submenu should be static instead of absolute */
+  .crb-menu-mobile .sub-menu {
+    @apply static mt-1 p-2 rounded-xl;
+    background-color: var(--c-surface);
+    border: 1px solid var(--c-border);
+  }
+  .crb-menu-mobile .sub-menu a:hover {
+    background-color: var(--c-surface-2);
+  }
+  /* SEARCH */
+  .sa-search {
+    @apply flex items-center gap-2 w-full;
+  }
+
+  .sa-search .search-field {
+    background-color: var(--c-input-bg);
+    border: 1px solid var(--c-input-border);
+    color: var(--c-input-text);
+
+    @apply w-full rounded-xl px-4 py-3 text-base outline-none;
+  }
+
+  .sa-search .search-field:focus {
+    box-shadow: 0 0 0 2px color-mix(in oklch, var(--c-primary) 40%, transparent);
+  }
+
+  .sa-search .search-submit {
+    background-color: var(--c-input-bg);
+    border: 1px solid var(--c-input-border);
+    color: var(--c-input-text);
+
+    @apply inline-flex items-center justify-center rounded-xl px-3 py-3 transition-colors;
+  }
+
+  .sa-search .search-submit:hover {
+    background-color: var(--c-input-hover-bg);
+  }
+
+  .sa-search--dropdown .search-field,
+  .sa-search--dropdown .search-submit {
+    @apply py-2.5;
+  }
+  .crb-card {
+    background-color: var(--c-surface);
+    border: 1px solid var(--c-border);
+    color: var(--c-text);
+    @apply rounded-xl p-6;
+  }
+  .crb-card--hover:hover {
+    background-color: var(--c-surface-2);
+  }
+  .crb-muted {
+    color: var(--c-muted);
+  }
+  .crb-search-panel {
+    background-color: color-mix(in oklch, var(--c-surface) 92%, transparent);
+    border-color: color-mix(in oklch, var(--c-border) 80%, transparent);
+    @apply rounded-2xl shadow-lg p-3 sm:p-4 backdrop-blur;
+  }
+  .crb-search-hero {
+    background: linear-gradient(to right, var(--c-primary), var(--c-secondary));
+  }
+  .logos-grid {
+    @apply grid gap-4 items-center;
+    grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  }
+
+  .logo-badge {
+    @apply flex items-center justify-center rounded-xl border p-4;
+    background-color: color-mix(in oklch, var(--c-surface) 92%, transparent);
+    border-color: var(--c-border);
+    min-height: 5rem; /* Chip-Höhe */
+  }
+
+  .partner-logo {
+    @apply block;
+    max-height: 3rem; /* Logo-Höhe */
+    max-width: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+  }
+  .logos-section {
+    @apply py-10;
+  }
+  /* optional: grayscale toggle */
+  .logos-section.is-grayscale .partner-logo {
+    filter: grayscale(100%) contrast(1.05);
+    opacity: 0.9;
+    transition: opacity 0.15s ease, filter 0.15s ease;
+  }
+  .logos-section.is-grayscale .partner-logo:hover {
+    filter: none;
+    opacity: 1;
+  }
+  .section-title {
+    @apply text-lg md:text-xl font-bold mb-4;
+    color: var(--c-text);
+  }
+}
+
+/* =========================================================
+   Utilities
+========================================================= */
+@layer utilities {
+  .crb-container {
+    @apply max-w-6xl mx-auto;
+  }
+}
+@layer base {
+  :root {
+    /* Core surfaces */
+    --c-bg: oklch(98% 0.005 95);
+    --c-surface: oklch(99% 0.003 95);
+    --c-surface-2: oklch(96% 0.006 95);
+
+    /* Text */
+    --c-text: oklch(21.6% 0.006 56.043);
+    --c-muted: oklch(45% 0.01 60);
+
+    /* Borders */
+    --c-border: oklch(90% 0.006 95);
+
+    /* Header/Menu */
+    --c-header: oklch(99% 0.003 95);
+    --c-menu: oklch(99% 0.003 95);
+
+    /* Inputs / Search */
+    --c-input-bg: var(--c-surface);
+    --c-input-border: var(--c-border);
+    --c-input-text: var(--c-text);
+    --c-input-hover-bg: var(--c-surface-2);
+
+    --c-icon: var(--c-text);
+    --c-icon-btn: var(--c-primary);
+    --c-icon-btn-hover-bg: color-mix(
+      in oklch,
+      var(--c-primary) 12%,
+      transparent
+    );
+  }
+
+  /* Tailwind dark-mode uses .dark */
+  .dark {
+    --c-bg: oklch(18% 0.006 56.043);
+    --c-surface: oklch(21.6% 0.006 56.043);
+    --c-surface-2: oklch(26% 0.007 56.043);
+
+    --c-text: oklch(96% 0.004 95);
+    --c-muted: oklch(74% 0.006 95);
+
+    --c-border: oklch(32% 0.006 56.043);
+
+    --c-header: oklch(21.6% 0.006 56.043);
+    --c-menu: oklch(21.6% 0.006 56.043);
+
+    --c-icon: var(--c-text);
+    --c-icon-btn: var(
+      --c-primary
+    ); /* oder: var(--c-text) wenn du’s dezenter willst */
+    --c-icon-btn-hover-bg: color-mix(
+      in oklch,
+      var(--c-primary) 18%,
+      transparent
+    );
+  }
+
+  body {
+    background-color: var(--c-bg);
+    color: var(--c-text);
+  }
+}
