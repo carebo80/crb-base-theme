@@ -9,7 +9,7 @@ require_once CRB_BASE_THEME_DIR . '/inc/icons.php';
 require_once CRB_BASE_THEME_DIR . '/inc/helpers.php';
 require_once CRB_BASE_THEME_DIR . '/inc/customizer.php';
 require_once CRB_BASE_THEME_DIR . '/inc/theme-setup.php';
-
+require_once CRB_BASE_THEME_DIR . '/inc/offline.php';
 require_once CRB_BASE_THEME_DIR . '/src/Walkers/NavWalker.php';
 
 

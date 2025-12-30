@@ -9,6 +9,13 @@ get_header();
 <main class="flex-1">
     <?php get_template_part('template-parts/hero'); ?>
     <?php get_template_part('template-parts/features'); ?>
+    <?php get_template_part('template-parts/sections/products-strip', null, [
+        'title'   => 'Beliebt im Shop',
+        'source'  => 'featured',
+        'limit'   => 8,
+        'columns' => 5,
+        'container' => 'wide',
+    ]); ?>
     <?php get_template_part('template-parts/partners', null, [
         'ids' => [91, 87, 91, 87],
         'title' => 'Unsere Partner',

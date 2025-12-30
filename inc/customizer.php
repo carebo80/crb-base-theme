@@ -3,6 +3,29 @@ if (!defined('ABSPATH')) exit;
 
 add_action('customize_register', function (WP_Customize_Manager $wp_customize) {
 
+	$wp_customize->add_setting('crb_site_offline', [
+		'default' => false,
+		'sanitize_callback' => fn($v) => (bool)$v,
+	]);
+
+	$wp_customize->add_control('crb_site_offline', [
+		'label'       => __('Seite offline (Wartungsmodus)', 'crb-base-theme'),
+		'description' => __('Nur Admins sehen die Seite normal.', 'crb-base-theme'),
+		'section'     => 'title_tagline',
+		'type'        => 'checkbox',
+	]);
+
+	$wp_customize->add_setting('crb_offline_message', [
+		'default' => 'Wir sind in Kürze wieder online.',
+		'sanitize_callback' => 'sanitize_textarea_field',
+	]);
+
+	$wp_customize->add_control('crb_offline_message', [
+		'label'   => __('Offline-Text', 'crb-base-theme'),
+		'section' => 'title_tagline',
+		'type'    => 'textarea',
+	]);
+
 	// Hero
 	$wp_customize->add_section('crb_hero_section', [
 		'title'    => __('Hero', 'crb-base-theme'),

@@ -115,14 +115,33 @@
 }
 
 @layer components {
+  .custom-logo-link img.custom-logo {
+    height: 48px;
+    width: auto;
+  }
+
   /* HEADER */
   .crb-site-header {
-    position: sticky;
-    top: var(--wp-admin--admin-bar--height, 0px);
-    z-index: 50;
-    background-color: var(--c-header);
-    box-shadow: 0 0 0 3px color-mix(in oklch, var(--c-primary) 25%, transparent);
-    @apply backdrop-blur;
+    /* Header setzt eigene Kontrast-Defaults */
+    --c-link: var(--c-text);
+    --c-icon-btn: var(--c-text); /* Icons = Textfarbe */
+    --c-icon-btn-hover-bg: color-mix(in oklch, var(--c-text) 10%, transparent);
+
+    /* falls du aktive Zustände grün willst */
+    --c-accent: var(--c-primary);
+  }
+  .crb-site-header a {
+    color: var(--c-link);
+  }
+  .crb-site-header .icon-btn {
+    color: var(--c-text) !important;
+  }
+  .crb-site-header .crb-menu--pills > li > .crb-menu-item > a {
+    background: color-mix(in oklch, var(--c-surface-2) 70%, transparent);
+    border-color: color-mix(in oklch, var(--c-border) 75%, transparent);
+  }
+  .crb-site-header a:hover {
+    color: color-mix(in oklch, var(--c-link) 85%, var(--c-accent));
   }
   /* HERO */
   .hero {
@@ -270,8 +289,11 @@
     @apply inline-flex items-center justify-center rounded-xl transition-colors;
     color: var(--c-icon-btn);
   }
+  .icon-btn:hover {
+    background-color: var(--c-icon-btn-hover-bg);
+  }
   .icon-btn--outline .icon-btn {
-    border: 1px solid color-mix(in oklch, var(--c-primary) 60%, transparent);
+    border: 1px solid color-mix(in oklch, var(--c-border) 75%, var(--c-accent));
     background-color: transparent;
   }
 
@@ -284,6 +306,20 @@
     width: 1.25rem; /* 20px */
     height: 1.25rem;
     display: block;
+  }
+  .icon-btn svg,
+  .icon-btn svg * {
+    stroke: currentColor !important;
+    fill: none !important;
+  }
+
+  /* falls du auch solid icons nutzt */
+  .icon-btn svg[data-solid],
+  .icon-btn svg.is-solid,
+  .icon-btn--solid svg,
+  .icon-btn--solid svg * {
+    fill: currentColor !important;
+    stroke: none !important;
   }
   /* Mobile: submenu should be static instead of absolute */
   .crb-menu-mobile .sub-menu {
@@ -384,6 +420,24 @@
     @apply text-lg md:text-xl font-bold mb-4;
     color: var(--c-text);
   }
+
+  /* Woocommerce */
+  .crb-container {
+    @apply max-w-6xl mx-auto;
+  }
+  .woocommerce a.button,
+  .woocommerce button.button,
+  .woocommerce a.add_to_cart_button {
+    @apply inline-flex items-center justify-center rounded-xl px-4 py-2 transition;
+    background-color: var(--c-primary);
+    color: var(--c-text);
+  }
+
+  .woocommerce a.button:hover,
+  .woocommerce button.button:hover,
+  .woocommerce a.add_to_cart_button:hover {
+    box-shadow: 0 0 0 3px color-mix(in oklch, var(--c-primary) 25%, transparent);
+  }
 }
 
 /* =========================================================
@@ -441,10 +495,6 @@
     --c-header: oklch(21.6% 0.006 56.043);
     --c-menu: oklch(21.6% 0.006 56.043);
 
-    --c-icon: var(--c-text);
-    --c-icon-btn: var(
-      --c-primary
-    ); /* oder: var(--c-text) wenn du’s dezenter willst */
     --c-icon-btn-hover-bg: color-mix(
       in oklch,
       var(--c-primary) 18%,

@@ -64,15 +64,7 @@ $cart_count = (class_exists('WooCommerce') && WC()->cart)
 						</svg>
 					</button>
 
-					<a href="<?php echo esc_url(home_url('/')); ?>" class="shrink-0 block" aria-label="<?php echo esc_attr(get_bloginfo('name')); ?>">
-						<?php
-						if (has_custom_logo()) {
-							the_custom_logo();
-						} else {
-							echo '<span class="font-bold text-lg">' . esc_html(get_bloginfo('name')) . '</span>';
-						}
-						?>
-					</a>
+					<?php get_template_part('template-parts/site-branding'); ?>
 
 					<!-- Desktop Primary Nav (left-aligned next to logo) -->
 					<nav id="primary-navigation"

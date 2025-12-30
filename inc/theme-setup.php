@@ -14,3 +14,11 @@ add_filter('body_class', function ($classes) {
 
   return $classes;
 });
+add_action('after_setup_theme', function () {
+  add_theme_support('custom-logo', [
+    'height'      => 80,
+    'width'       => 240,
+    'flex-height' => true,
+    'flex-width'  => true,
+  ]);
+});
