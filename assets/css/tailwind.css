@@ -119,7 +119,23 @@
     height: 48px;
     width: auto;
   }
-
+  .crb-menu-icon svg,
+  .crb-menu-icon svg * {
+    stroke: currentColor !important;
+    fill: none !important;
+  }
+  .crb-submenu-toggle {
+    color: var(--c-text);
+  }
+  .crb-submenu-toggle:hover {
+    background-color: var(--c-surface-2);
+  }
+  /* falls du später solid icons willst: */
+  .crb-menu-icon.is-solid svg,
+  .crb-menu-icon.is-solid svg * {
+    fill: currentColor !important;
+    stroke: none !important;
+  }
   /* HEADER */
   .crb-site-header {
     /* Header setzt eigene Kontrast-Defaults */
